@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Traffic Management Systems: Reducing Urban Congestion Using IoT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt: #1b1e21;
+    --asphalt-soft: #2a2e33;
+    --paper: #f1efe9;
+    --paper-dim: #e5e2d9;
+    --line: #cfc9ba;
+    --signal-teal: #2f6b78;
+    --signal-teal-deep: #1f4b56;
+    --amber: #d99a3d;
+    --red: #b8483c;
+    --ink: #22201c;
+    --ink-soft: #55524a;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    line-height:1.65;
+  }
+  h1,h2,h3,.label,.byline,nav,.tag{
+    font-family:'Space Grotesk', sans-serif;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--asphalt);
+    color:var(--paper);
+    padding:64px 24px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:920px;
+    margin:0 auto;
+    position:relative;
+    z-index:2;
+  }
+  .kicker{
+    font-size:0.95rem;
+    color:var(--amber);
+    font-weight:500;
+    letter-spacing:0.02em;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    line-height:1.08;
+    font-weight:600;
+    margin:0 0 22px;
+    max-width:15ch;
+  }
+  .hero p.dek{
+    font-family:'Source Serif 4', serif;
+    font-size:1.2rem;
+    color:#d8d5cc;
+    max-width:52ch;
+    margin:0 0 36px;
+  }
+  .byline-row{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    padding-bottom:4px;
+    font-size:0.92rem;
+    color:#a9a6a0;
+  }
+  .byline-row strong{color:var(--paper); font-weight:500;}
+  .members-row{
+    display:flex;
+    gap:10px 22px;
+    flex-wrap:wrap;
+    padding-top:16px;
+    padding-bottom:36px;
+    border-bottom:1px solid #3a3e42;
+    font-size:0.9rem;
+    color:#cfccc4;
+  }
+  .members-row span{position:relative; padding-left:14px;}
+  .members-row span::before{
+    content:"";
+    position:absolute;
+    left:0; top:8px;
+    width:6px; height:6px;
+    background:var(--amber);
+  }
+
+  .intersection{
+    width:100%;
+    height:auto;
+    display:block;
+    margin-top:20px;
+  }
+
+  /* ---------- ARTICLE ---------- */
+  main{
+    max-width:680px;
+    margin:0 auto;
+    padding:56px 24px 100px;
+  }
+  main p{
+    font-size:1.09rem;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  main > p:first-of-type::first-letter{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:3.6rem;
+    font-weight:600;
+    float:left;
+    line-height:0.8;
+    padding:6px 10px 0 0;
+    color:var(--signal-teal-deep);
+  }
+  h2{
+    font-size:1.55rem;
+    font-weight:600;
+    color:var(--ink);
+    margin:52px 0 18px;
+    padding-top:2px;
+  }
+  h2 .num{
+    color:var(--signal-teal);
+    margin-right:10px;
+  }
+  h3{
+    font-size:1.12rem;
+    font-weight:600;
+    margin:30px 0 12px;
+    color:var(--signal-teal-deep);
+  }
+  strong{color:var(--ink); font-weight:600;}
+
+  /* pull quote */
+  blockquote{
+    margin:36px 0;
+    padding:4px 0 4px 22px;
+    border-left:3px solid var(--amber);
+    font-size:1.18rem;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  /* block table used for functional blocks */
+  .block-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:26px 0 34px;
+  }
+  .block-card{
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    padding:16px 18px;
+  }
+  .block-card .fn{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:0.98rem;
+    color:var(--signal-teal-deep);
+    margin-bottom:6px;
+  }
+  .block-card p{
+    font-size:0.94rem;
+    margin:0;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  /* comm model rows */
+  .model-row{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:20px;
+    padding:18px 0;
+    border-top:1px solid var(--line);
+  }
+  .model-row:last-child{border-bottom:1px solid var(--line);}
+  .model-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:0.98rem;
+    color:var(--ink);
+  }
+  .model-row p{margin:0; font-size:0.98rem;}
+
+  figure{margin:34px 0;}
+  figcaption{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    margin-top:10px;
+    text-align:center;
+  }
+
+  .footer-note{
+    margin-top:60px;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+    font-size:0.9rem;
+    color:var(--ink-soft);
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .footer-note .tag{
+    display:inline-block;
+    background:var(--signal-teal);
+    color:var(--paper);
+    font-size:0.78rem;
+    padding:3px 9px;
+    margin:3px 6px 3px 0;
+  }
+
+  @media (max-width:560px){
+    .block-grid{grid-template-columns:1fr;}
+    .model-row{grid-template-columns:1fr; gap:6px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">CCE1 — Blog Writing · Internet of Things</div>
+    <h1>Smart Traffic Management Systems: Reducing Urban Congestion Using IoT</h1>
+    <p class="dek">A single blocked intersection ripples for kilometres. Here's how sensors, networks, and control logic work together to keep a city's traffic actually moving.</p>
+    <div class="byline-row">
+      <span>Group 1 · BTech 1</span>
+      <span><strong>Module topics:</strong> Functional Blocks of IoT, Communication Models</span>
+    </div>
+    <div class="members-row">
+      <span>Aanshul Pravin Acharya</span>
+      <span>Atharva Anil Avhad</span>
+      <span>Gayatri Srinivas Balkrishna Bandi</span>
+      <span>Rishi Dattatray Bangar</span>
+    </div>
+  </div>
+  <svg class="intersection" viewBox="0 0 920 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract diagram of a road intersection with connected sensor nodes">
+    <rect x="0" y="0" width="920" height="220" fill="#1b1e21"/>
+    <rect x="0" y="90" width="920" height="40" fill="#2a2e33"/>
+    <rect x="440" y="0" width="40" height="220" fill="#2a2e33"/>
+    <g stroke="#4a4e52" stroke-width="2" stroke-dasharray="10 10">
+      <line x1="0" y1="110" x2="920" y2="110"/>
+      <line x1="460" y1="0" x2="460" y2="220"/>
+    </g>
+    <g>
+      <circle cx="460" cy="110" r="5" fill="#d99a3d"/>
+      <circle cx="180" cy="110" r="4" fill="#2f6b78"/>
+      <circle cx="740" cy="110" r="4" fill="#2f6b78"/>
+      <circle cx="460" cy="30" r="4" fill="#2f6b78"/>
+      <circle cx="460" cy="190" r="4" fill="#2f6b78"/>
+      <path d="M460,110 L180,110" stroke="#3a5c62" stroke-width="1"/>
+      <path d="M460,110 L740,110" stroke="#3a5c62" stroke-width="1"/>
+      <path d="M460,110 L460,30" stroke="#3a5c62" stroke-width="1"/>
+      <path d="M460,110 L460,190" stroke="#3a5c62" stroke-width="1"/>
+    </g>
+    <g fill="#7a776f" font-family="Space Grotesk, sans-serif" font-size="11">
+      <text x="150" y="95">sensor node</text>
+      <text x="700" y="95">sensor node</text>
+      <text x="468" y="24">camera</text>
+      <text x="468" y="210">RSU</text>
+      <text x="468" y="100">control unit</text>
+    </g>
+  </svg>
+</header>
+
+<main>
+
+  <p>Ask anyone stuck at a red light while three lanes over sit empty, and they'll tell you traffic signals are guessing. Most of them still run on fixed timers set years ago, blind to whatever is actually happening on the road right now. Cities lose enormous stretches of commuting time to this blindness — not because there isn't enough road capacity, but because that capacity is allocated by a clock instead of by demand.</p>
+
+  <p>Smart Traffic Management Systems fix this by treating the road network as a sensing and decision-making system rather than a fixed piece of infrastructure. Cameras, inductive loop detectors, and GPS-equipped vehicles constantly report how many cars are where, and control software adjusts signal timing, reroutes traffic, and warns drivers in something close to real time. It's a textbook application of the Internet of Things: physical sensing, networked communication, and automated action, applied to the oldest urban headache there is.</p>
+
+  <blockquote>Congestion isn't a capacity problem so much as an information problem — the road often has room, but the signal doesn't know it.</blockquote>
+
+  <h2><span class="num">01</span>What an IoT traffic system is actually built from</h2>
+
+  <p>Every IoT deployment, traffic or otherwise, breaks down into the same six functional blocks. Mapping smart traffic onto this reference structure makes it easier to see where the real engineering effort goes.</p>
+
+  <div class="block-grid">
+    <div class="block-card">
+      <div class="fn">Device</div>
+      <p>Inductive loop detectors embedded in the road, traffic cameras, GPS units in connected vehicles, and pedestrian push buttons — the physical layer that measures the world.</p>
+    </div>
+    <div class="block-card">
+      <div class="fn">Communication</div>
+      <p>Roadside units (RSUs) and cellular or V2X radios carry data from sensors to controllers and back, over links like DSRC, 4G/5G, or Wi-Fi.</p>
+    </div>
+    <div class="block-card">
+      <div class="fn">Services</div>
+      <p>Software that turns raw counts into meaning: congestion scoring, queue-length estimation, and predicting how long a jam will last.</p>
+    </div>
+    <div class="block-card">
+      <div class="fn">Management</div>
+      <p>The traffic control centre's dashboards and rule engines, where operators or algorithms decide how signal timing should change.</p>
+    </div>
+    <div class="block-card">
+      <div class="fn">Security</div>
+      <p>Authentication of sensor nodes and encrypted links, since a spoofed traffic feed could trigger a bad — even dangerous — signal decision.</p>
+    </div>
+    <div class="block-card">
+      <div class="fn">Application</div>
+      <p>What the public sees: adaptive signal displays, live congestion layers in navigation apps, and driver alerts for incidents ahead.</p>
+    </div>
+  </div>
+
+  <p>Notice that only two of these six blocks are visible to a driver — the device layer they drive past, and the application layer on their phone. The other four blocks are the invisible plumbing that makes an intersection "smart" instead of just "sensored." A camera at a junction that nobody analyses, transmits, or acts on is not a smart traffic system; it's a security camera.</p>
+
+  <h3>A concrete example</h3>
+  <p>Take a single junction fitted with an overhead camera and two inductive loops. The device block captures vehicle counts every few seconds. The communication block pushes that data over a cellular link to a nearby edge server. The services block estimates queue length on each approach. The management block compares that queue against a threshold and decides to extend the green phase by eight seconds. The application block reflects that change instantly to any navigation app pulling live signal data. Security wraps every hop of that chain so a malicious actor can't spoof a queue reading and force an unsafe extension.</p>
+
+  <h2><span class="num">02</span>How the pieces actually talk to each other</h2>
+
+  <p>Sensing data is only useful if it reaches the right place at the right time, in the right shape. IoT systems generally rely on four communication models, and a working traffic network uses all four for different jobs.</p>
+
+  <div class="model-row">
+    <div class="model-name">Request–Response</div>
+    <p>A control centre dashboard queries a specific intersection controller for its current signal state before an operator overrides it manually — a direct, synchronous ask-and-answer exchange.</p>
+  </div>
+  <div class="model-row">
+    <div class="model-name">Publish–Subscribe</div>
+    <p>Sensor nodes publish vehicle-count updates to a broker every few seconds; the analytics service, the public map layer, and the incident-detection module all subscribe independently, without the sensor knowing or caring who's listening.</p>
+  </div>
+  <div class="model-row">
+    <div class="model-name">Push–Pull</div>
+    <p>Historical counts queue up in a data store; a nightly analytics job pulls the day's records to retrain congestion-prediction models, decoupled from the moment the data was generated.</p>
+  </div>
+  <div class="model-row">
+    <div class="model-name">Exemplar (REST-based)</div>
+    <p>A city's open-data portal exposes intersection status over a RESTful API, letting third-party apps like ride-hailing or logistics platforms fetch live conditions using standard HTTP calls.</p>
+  </div>
+
+  <p>The publish–subscribe model in particular is what allows the system to scale. A single junction generates a steady trickle of readings, but a city has thousands of junctions. If every consumer of that data — signal control, public dashboards, research databases — had to individually poll every sensor, the network would buckle under redundant traffic. Publish–subscribe lets one stream serve many purposes at once.</p>
+
+  <h2><span class="num">03</span>Where this still falls short</h2>
+
+  <p>None of this is free of trade-offs. Camera-based sensing struggles in heavy rain, fog, or at night without supplementary infrared. Cellular links introduce latency that can matter when a decision needs to happen within a signal cycle. And every additional connected device is another point where the system could be attacked or simply fail — a stuck-open loop detector reporting phantom traffic can throw off an entire corridor's timing.</p>
+
+  <p>There's also a coordination problem that no single intersection can solve alone. Optimising one junction in isolation can just shift the jam one block down the road. The more advanced deployments now coordinate signal timing across an entire corridor or grid, treating the whole area's traffic flow as one optimisation problem rather than many separate ones — which is really just the functional-block model, repeated at city scale.</p>
+
+  <h2><span class="num">04</span>The takeaway</h2>
+
+  <p>Smart traffic management isn't one clever gadget bolted onto a signal pole — it's an entire pipeline: devices that sense, networks that carry, services that interpret, management that decides, security that protects, and applications that inform. The communication models stitching those blocks together determine whether the system reacts in real time or just accumulates data nobody uses in time to matter. Get both right, and a city stops managing traffic by the clock and starts managing it by what's actually on the road.</p>
+
+  <div class="footer-note">
+    <span class="tag">IoT</span><span class="tag">Smart Cities</span><span class="tag">Functional Blocks</span><span class="tag">Communication Models</span>
+  </div>
+
+</main>
+
+</body>
+</html>
